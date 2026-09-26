@@ -9,19 +9,23 @@
   <style>
     :root {
       --bg: #101116;
-      --card: #191b22;
-      --card-light: #242731;
+      --surface: #191b22;
+      --surface-light: #252832;
       --text: #ffffff;
-      --muted: #9ca1ae;
+      --muted: #a0a4b1;
       --accent: #d8ff52;
       --border: rgba(255, 255, 255, 0.1);
-      --danger: #ff6478;
+      --danger: #ff657a;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -50,7 +54,7 @@
       top: 0;
       z-index: 10;
       border-bottom: 1px solid var(--border);
-      background: rgba(16, 17, 22, 0.94);
+      background: rgba(16, 17, 22, 0.95);
       backdrop-filter: blur(14px);
     }
 
@@ -67,6 +71,7 @@
       font-size: 24px;
       font-weight: 900;
       letter-spacing: 2px;
+      text-decoration: none;
     }
 
     .header-actions {
@@ -76,13 +81,17 @@
     }
 
     .search {
-      width: 280px;
+      width: 290px;
       padding: 12px 15px;
       color: var(--text);
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       outline: none;
+    }
+
+    .search::placeholder {
+      color: var(--muted);
     }
 
     .search:focus {
@@ -91,12 +100,18 @@
 
     .cart-button {
       position: relative;
-      padding: 12px 16px;
+      padding: 12px 17px;
       color: #111;
       background: var(--accent);
       border: 0;
       border-radius: 10px;
       font-weight: 800;
+    }
+
+    .cart-button:hover,
+    .add-button:hover,
+    .checkout-button:hover {
+      background: #efffa8;
     }
 
     .cart-count {
@@ -107,25 +122,26 @@
       height: 22px;
       display: grid;
       place-items: center;
-      color: #fff;
+      color: #ffffff;
       background: var(--danger);
       border-radius: 50%;
       font-size: 12px;
+      font-weight: 700;
     }
 
     .hero {
-      padding: 80px 0 55px;
+      padding: 78px 0 58px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.15fr 0.85fr;
       align-items: center;
-      gap: 40px;
+      gap: 42px;
     }
 
     .hero h1 {
-      max-width: 700px;
+      max-width: 720px;
       margin-bottom: 22px;
       font-size: clamp(44px, 7vw, 86px);
       line-height: 0.94;
@@ -144,19 +160,19 @@
     }
 
     .hero-card {
-      min-height: 280px;
+      min-height: 285px;
       display: grid;
       place-items: center;
-      padding: 30px;
+      overflow: hidden;
       border: 1px solid var(--border);
-      border-radius: 26px;
+      border-radius: 28px;
       background:
         radial-gradient(
           circle at 75% 20%,
           rgba(216, 255, 82, 0.55),
           transparent 25%
         ),
-        linear-gradient(135deg, #37421d, #171922 70%);
+        linear-gradient(135deg, #39451d, #171922 70%);
     }
 
     .hero-card strong {
@@ -186,7 +202,7 @@
     }
 
     .filter-button {
-      padding: 10px 15px;
+      padding: 10px 16px;
       color: var(--muted);
       background: transparent;
       border: 1px solid var(--border);
@@ -209,14 +225,14 @@
 
     .product-card {
       overflow: hidden;
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
-      transition: 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     .product-card:hover {
-      border-color: rgba(216, 255, 82, 0.65);
+      border-color: rgba(216, 255, 82, 0.7);
       transform: translateY(-5px);
     }
 
@@ -224,7 +240,7 @@
       position: relative;
       aspect-ratio: 1 / 0.78;
       overflow: hidden;
-      background: var(--card-light);
+      background: var(--surface-light);
     }
 
     .product-image {
@@ -286,10 +302,6 @@
       font-weight: 800;
     }
 
-    .add-button:hover {
-      background: #f0ffaf;
-    }
-
     .empty-state {
       grid-column: 1 / -1;
       padding: 60px 20px;
@@ -305,7 +317,7 @@
       align-items: center;
       justify-content: center;
       padding: 16px;
-      background: rgba(0, 0, 0, 0.72);
+      background: rgba(0, 0, 0, 0.75);
     }
 
     .modal.open {
@@ -317,7 +329,7 @@
       max-height: 80vh;
       overflow-y: auto;
       padding: 24px;
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
     }
@@ -334,6 +346,7 @@
       background: transparent;
       border: 0;
       font-size: 28px;
+      line-height: 1;
     }
 
     .cart-item {
@@ -518,7 +531,7 @@
           <span id="cartTotal">0 ₽</span>
         </strong>
 
-        <button class="checkout-button" type="button">
+        <button id="checkoutButton" class="checkout-button" type="button">
           Оформить
         </button>
       </div>
@@ -526,30 +539,6 @@
   </div>
 
   <script>
-    /*
-      Используются локальные пути.
-      Если файл отсутствует, будет показана SVG-заглушка.
-    */
-    const imageSets = {
-      watch: [
-        "assets/watch-1.jpg",
-        "assets/watch-2.jpg",
-        "assets/watch-3.jpg"
-      ],
-
-      laptop: [
-        "assets/laptop-1.jpg",
-        "assets/laptop-2.jpg",
-        "assets/laptop-3.jpg"
-      ],
-
-      phone: [
-        "assets/phone-1.jpg",
-        "assets/phone-2.jpg",
-        "assets/phone-3.jpg"
-      ]
-    };
-
     const categoryLabels = {
       watch: "Умные часы",
       laptop: "Ноутбук",
@@ -562,72 +551,63 @@
         category: "watch",
         name: "Pulse Watch Pro",
         description: "AMOLED · GPS · До 14 дней работы",
-        price: 24990,
-        image: imageSets.watch[0]
+        price: 24990
       },
       {
         id: 2,
         category: "watch",
         name: "Active Watch",
         description: "Спорт · Пульс · Водозащита",
-        price: 16990,
-        image: imageSets.watch[1]
+        price: 16990
       },
       {
         id: 3,
         category: "watch",
         name: "Minimal Watch",
         description: "Лёгкий корпус · NFC · AMOLED",
-        price: 19990,
-        image: imageSets.watch[2]
+        price: 19990
       },
       {
         id: 4,
         category: "laptop",
         name: "NovaBook Air",
         description: "14″ · 16/512 GB · До 18 часов",
-        price: 89990,
-        image: imageSets.laptop[0]
+        price: 89990
       },
       {
         id: 5,
         category: "laptop",
         name: "WorkStation Pro",
         description: "16″ · 32/1000 GB · RTX Graphics",
-        price: 149990,
-        image: imageSets.laptop[1]
+        price: 149990
       },
       {
         id: 6,
         category: "laptop",
         name: "PixelBook X",
         description: "OLED · 32/1000 GB · Thunderbolt",
-        price: 124990,
-        image: "assets/laptop-pixelbook.jpg"
+        price: 124990
       },
       {
         id: 7,
         category: "phone",
         name: "NeoPhone Ultra",
         description: "6.7″ OLED · 512 GB · Pro Camera",
-        price: 99990,
-        image: imageSets.phone[0]
+        price: 99990
       },
       {
         id: 8,
         category: "phone",
         name: "NeoPhone Air",
         description: "6.1″ OLED · 256 GB · 5G",
-        price: 69990,
-        image: imageSets.phone[1]
+        price: 69990
       },
       {
         id: 9,
         category: "phone",
         name: "NeoPhone Mini",
         description: "5.8″ OLED · 128 GB · NFC",
-        price: 49990,
-        image: imageSets.phone[2]
+        price: 49990
       }
     ];
 
@@ -643,73 +623,49 @@
     const closeCart = document.getElementById("closeCart");
     const cartItems = document.getElementById("cartItems");
     const cartTotal = document.getElementById("cartTotal");
+    const checkoutButton = document.getElementById("checkoutButton");
 
     function formatPrice(price) {
       return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
     }
 
-    function createFallbackImage(product) {
-      const themes = {
+    /*
+      Создание изображения товара внутри HTML.
+      Используется data:image/svg+xml, поэтому никаких внешних
+      файлов, путей и папок assets не требуется.
+    */
+    function createProductImage(product) {
+      const settings = {
         watch: {
-          first: "#d8ff52",
-          second: "#252831",
+          color1: "#d8ff52",
+          color2: "#20242d",
           label: "SMART WATCH"
         },
-
         laptop: {
-          first: "#75a7ff",
-          second: "#171a23",
+          color1: "#6d9cff",
+          color2: "#171a24",
           label: "LAPTOP"
         },
-
         phone: {
-          first: "#cb11ab",
-          second: "#211827",
+          color1: "#d112aa",
+          color2: "#211727",
           label: "SMARTPHONE"
         }
       };
 
-      const theme = themes[product.category];
+      const theme = settings[product.category];
 
       let device = "";
 
-      if (product.category === "laptop") {
+      if (product.category === "watch") {
         device = `
           <rect
-            x="210"
-            y="170"
-            width="480"
-            height="290"
-            rx="18"
-            fill="#111318"
-            stroke="#ffffff"
-            stroke-opacity=".25"
-            stroke-width="8"
-          />
-
-          <rect
-            x="235"
-            y="195"
-            width="430"
-            height="240"
-            rx="8"
-            fill="#30394c"
-          />
-
-          <path
-            d="M130 500h640l55 55H75z"
-            fill="#090a0d"
-          />
-        `;
-      } else if (product.category === "watch") {
-        device = `
-          <rect
-            x="350"
+            x="355"
             y="55"
-            width="200"
-            height="580"
-            rx="90"
-            fill="#14161b"
+            width="190"
+            height="590"
+            rx="85"
+            fill="#111318"
           />
 
           <rect
@@ -718,52 +674,122 @@
             width="350"
             height="320"
             rx="75"
-            fill="#08090c"
+            fill="#07080b"
             stroke="#d8ff52"
             stroke-width="12"
           />
 
+          <circle
+            cx="450"
+            cy="345"
+            r="105"
+            fill="#151b24"
+          />
+
           <text
             x="450"
-            y="375"
-            text-anchor="middle"
+            y="365"
             fill="#d8ff52"
+            text-anchor="middle"
             font-family="Arial"
-            font-size="55"
+            font-size="52"
             font-weight="700"
           >
             10:24
           </text>
         `;
-      } else {
+      }
+
+      if (product.category === "laptop") {
         device = `
           <rect
-            x="310"
-            y="65"
-            width="280"
-            height="570"
-            rx="42"
-            fill="#101116"
+            x="205"
+            y="155"
+            width="490"
+            height="310"
+            rx="18"
+            fill="#0d0f14"
             stroke="#ffffff"
-            stroke-opacity=".25"
+            stroke-opacity=".35"
             stroke-width="8"
           />
 
           <rect
-            x="332"
-            y="105"
-            width="236"
-            height="490"
-            rx="28"
-            fill="#332238"
+            x="230"
+            y="180"
+            width="440"
+            height="260"
+            rx="8"
+            fill="#25354e"
+          />
+
+          <circle
+            cx="450"
+            cy="310"
+            r="75"
+            fill="#6d9cff"
+            opacity=".55"
+          />
+
+          <path
+            d="M120 505h660l65 58H55z"
+            fill="#08090c"
+          />
+
+          <rect
+            x="385"
+            y="515"
+            width="130"
+            height="10"
+            rx="5"
+            fill="#343944"
+          />
+        `;
+      }
+
+      if (product.category === "phone") {
+        device = `
+          <rect
+            x="305"
+            y="55"
+            width="290"
+            height="590"
+            rx="46"
+            fill="#0e1015"
+            stroke="#ffffff"
+            stroke-opacity=".35"
+            stroke-width="8"
+          />
+
+          <rect
+            x="328"
+            y="100"
+            width="244"
+            height="500"
+            rx="30"
+            fill="#352039"
           />
 
           <circle
             cx="450"
             cy="350"
-            r="85"
-            fill="#cb11ab"
-            opacity=".65"
+            r="100"
+            fill="#d112aa"
+            opacity=".7"
+          />
+
+          <circle
+            cx="390"
+            cy="160"
+            r="12"
+            fill="#000000"
+          />
+
+          <circle
+            cx="430"
+            cy="160"
+            r="12"
+            fill="#000000"
           />
         `;
       }
@@ -777,23 +803,27 @@
         >
           <defs>
             <linearGradient
-              id="bg"
+              id="gradient"
               x1="0"
               y1="0"
               x2="1"
               y2="1"
             >
-              <stop offset="0%" stop-color="${theme.first}"/>
-              <stop offset="100%" stop-color="${theme.second}"/>
+              <stop offset="0%" stop-color="${theme.color1}"/>
+              <stop offset="100%" stop-color="${theme.color2}"/>
             </linearGradient>
           </defs>
 
-          <rect width="900" height="700" fill="url(#bg)"/>
+          <rect
+            width="900"
+            height="700"
+            fill="url(#gradient)"
+          />
 
           <circle
             cx="760"
             cy="100"
-            r="180"
+            r="190"
             fill="#ffffff"
             opacity=".13"
           />
@@ -810,11 +840,11 @@
 
           <text
             x="450"
-            y="640"
-            text-anchor="middle"
+            y="650"
             fill="#ffffff"
+            text-anchor="middle"
             font-family="Arial"
-            font-size="25"
+            font-size="26"
             font-weight="700"
             letter-spacing="4"
           >
@@ -827,41 +857,13 @@
         encodeURIComponent(svg);
     }
 
-    function createProductImage(product) {
-      const image = document.createElement("img");
-
-      image.className = "product-image";
-      image.alt = product.name;
-      image.loading = "eager";
-      image.decoding = "async";
-
-      let fallbackUsed = false;
-
-      /*
-        Обработчик устанавливается ДО image.src.
-        Это важно: ошибка загрузки не будет пропущена.
-      */
-      image.addEventListener("error", () => {
-        if (fallbackUsed) {
-          return;
-        }
-
-        fallbackUsed = true;
-        image.src = createFallbackImage(product);
-      });
-
-      image.src = product.image;
-
-      return image;
-    }
-
     function getVisibleProducts() {
       return products.filter((product) => {
         const matchesFilter =
           currentFilter === "all" ||
           product.category === currentFilter;
 
-        const text = [
+        const searchText = [
           product.name,
           product.description,
           categoryLabels[product.category]
@@ -869,7 +871,8 @@
           .join(" ")
           .toLowerCase();
 
-        const matchesSearch = text.includes(searchQuery);
+        const matchesSearch =
+          searchText.includes(searchQuery);
 
         return matchesFilter && matchesSearch;
       });
@@ -897,7 +900,10 @@
         const imageWrapper = document.createElement("div");
         imageWrapper.className = "product-image-wrapper";
 
-        const image = createProductImage(product);
+        const image = document.createElement("img");
+        image.className = "product-image";
+        image.src = createProductImage(product);
+        image.alt = product.name;
 
         const category = document.createElement("span");
         category.className = "product-category";
@@ -962,8 +968,8 @@
         const item = document.createElement("div");
         item.className = "cart-item";
 
-        const info = document.createElement("div");
-        info.className = "cart-item-info";
+        const itemInfo = document.createElement("div");
+        itemInfo.className = "cart-item-info";
 
         const name = document.createElement("strong");
         name.textContent = product.name;
@@ -976,14 +982,15 @@
         removeButton.className = "remove-button";
         removeButton.type = "button";
         removeButton.textContent = "×";
+        removeButton.title = "Удалить товар";
 
         removeButton.addEventListener("click", () => {
           cart.splice(index, 1);
           updateCart();
         });
 
-        info.append(name, price);
-        item.append(info, removeButton);
+        itemInfo.append(name, price);
+        item.append(itemInfo, removeButton);
         cartItems.appendChild(item);
       });
 
@@ -1020,6 +1027,15 @@
       if (event.target === cartModal) {
         cartModal.classList.remove("open");
       }
+    });
+
+    checkoutButton.addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Корзина пуста");
+        return;
+      }
+
+      alert("Спасибо за заказ!");
     });
 
     renderProducts();
