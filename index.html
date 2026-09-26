@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>NEOTECH — техника нового поколения</title>
+  <title>NEOTECH — магазин современной техники</title>
 
   <meta
     name="description"
-    content="NEOTECH — каталог современных часов, ноутбуков и смартфонов."
+    content="NEOTECH — магазин часов, ноутбуков и смартфонов."
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,18 +21,18 @@
 
   <style>
     :root {
-      --bg: #08090c;
-      --surface: #111318;
-      --surface-light: #191b21;
-      --white: #f7f7f4;
-      --muted: #9296a3;
+      --dark: #08090c;
+      --dark-card: #111318;
+      --white: #ffffff;
+      --text: #18191d;
+      --muted: #8e919c;
       --line: rgba(255, 255, 255, 0.12);
+      --pink: #cb11ab;
+      --pink-dark: #a90e8e;
       --lime: #d8ff52;
-      --blue: #75a7ff;
-      --violet: #ae86ff;
-      --orange: #ff9b62;
-      --radius: 24px;
+      --green: #4e9b55;
       --container: 1240px;
+      --radius: 22px;
     }
 
     * {
@@ -51,15 +51,15 @@
       background:
         radial-gradient(
           circle at 85% 0%,
-          rgba(117, 167, 255, 0.18),
+          rgba(117, 167, 255, 0.17),
           transparent 30%
         ),
         radial-gradient(
-          circle at 0% 35%,
-          rgba(174, 134, 255, 0.12),
+          circle at 0% 40%,
+          rgba(174, 134, 255, 0.13),
           transparent 28%
         ),
-        var(--bg);
+        var(--dark);
       color: var(--white);
       font-family: "Manrope", sans-serif;
     }
@@ -68,10 +68,15 @@
       content: "";
       position: fixed;
       inset: 0;
-      z-index: 20;
+      z-index: 50;
       pointer-events: none;
       opacity: 0.025;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     button,
@@ -83,11 +88,6 @@
       cursor: pointer;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
     .container {
       width: min(var(--container), calc(100% - 48px));
       margin: 0 auto;
@@ -96,9 +96,9 @@
     .header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       border-bottom: 1px solid var(--line);
-      background: rgba(8, 9, 12, 0.78);
+      background: rgba(8, 9, 12, 0.82);
       backdrop-filter: blur(18px);
     }
 
@@ -131,7 +131,7 @@
       transform: rotate(-8deg);
     }
 
-    .logo span:last-child span {
+    .logo-text span {
       color: var(--lime);
     }
 
@@ -181,7 +181,6 @@
     }
 
     .hero {
-      position: relative;
       padding: 105px 0 80px;
       overflow: hidden;
     }
@@ -284,8 +283,8 @@
       border-radius: 42% 58% 52% 48%;
       background:
         radial-gradient(circle at 30% 27%, #eaffae, transparent 4%),
-        radial-gradient(circle at 65% 62%, var(--blue), transparent 28%),
-        linear-gradient(140deg, var(--violet), #3a285c 60%, #14151b);
+        radial-gradient(circle at 65% 62%, #75a7ff, transparent 28%),
+        linear-gradient(140deg, #ae86ff, #3a285c 60%, #14151b);
       box-shadow:
         0 0 110px rgba(174, 134, 255, 0.28),
         inset -35px -40px 70px rgba(0, 0, 0, 0.6);
@@ -399,13 +398,13 @@
     }
 
     .search {
-      width: 240px;
+      width: 250px;
       min-height: 43px;
       padding: 0 16px;
       border: 1px solid var(--line);
       border-radius: 100px;
       outline: none;
-      background: var(--surface);
+      background: var(--dark-card);
       color: var(--white);
       font-size: 13px;
     }
@@ -416,123 +415,177 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
     .product-card {
-      min-height: 440px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 18px;
+      position: relative;
+      min-width: 0;
       overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
-      transition: 0.35s ease;
+      border: 1px solid #e4e5e9;
+      border-radius: 16px;
+      background: #ffffff;
+      color: var(--text);
+      transition: 0.25s ease;
     }
 
     .product-card:hover {
-      border-color: rgba(216, 255, 82, 0.6);
-      background: var(--surface-light);
-      transform: translateY(-7px);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     }
 
     .product-visual {
-      min-height: 230px;
+      height: 270px;
       position: relative;
-      display: grid;
-      place-items: center;
       overflow: hidden;
-      border-radius: 18px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1), transparent 45%),
-        linear-gradient(135deg, #20242d, #111318);
+      background: #f2f3f5;
     }
 
-    .product-visual::after {
-      content: "";
+    .product-image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: 0.4s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.06);
+    }
+
+    .product-badge {
       position: absolute;
-      inset: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
-      pointer-events: none;
-    }
-
-    .product-symbol {
-      position: relative;
-      z-index: 1;
-      font-size: 88px;
-      filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.4));
-      transition: 0.35s ease;
-    }
-
-    .product-card:hover .product-symbol {
-      transform: scale(1.1) rotate(-5deg);
-    }
-
-    .watch .product-symbol {
-      color: var(--lime);
-    }
-
-    .laptop .product-symbol {
-      color: var(--blue);
-    }
-
-    .phone .product-symbol {
-      color: var(--violet);
-    }
-
-    .product-type {
-      margin-top: 17px;
-      color: var(--lime);
-      font-size: 10px;
+      top: 12px;
+      left: 12px;
+      z-index: 2;
+      padding: 6px 9px;
+      border-radius: 7px;
+      background: var(--pink);
+      color: #ffffff;
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
     }
 
-    .product-name {
-      margin: 7px 0;
-      font-size: 23px;
-      font-weight: 500;
-    }
-
-    .product-meta {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .product-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .price {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 21px;
-      font-weight: 700;
-    }
-
-    .add-button {
-      width: 42px;
-      height: 42px;
+    .favorite-button {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
       display: grid;
       place-items: center;
       border: 0;
       border-radius: 50%;
-      background: var(--lime);
-      color: #111;
+      background: rgba(255, 255, 255, 0.9);
+      color: #777983;
+      font-size: 20px;
+      transition: 0.2s ease;
+    }
+
+    .favorite-button:hover,
+    .favorite-button.active {
+      color: var(--pink);
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 13px 14px 15px;
+    }
+
+    .product-type {
+      margin-bottom: 5px;
+      color: #8b8d96;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .product-name {
+      min-height: 42px;
+      margin: 0 0 7px;
+      overflow: hidden;
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.35;
+    }
+
+    .product-meta {
+      min-height: 34px;
+      margin-bottom: 7px;
+      overflow: hidden;
+      color: #777983;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 9px;
+      color: #ffb300;
+      font-size: 13px;
+    }
+
+    .product-rating span {
+      color: #777983;
+      font-size: 11px;
+    }
+
+    .product-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
       font-size: 22px;
+      font-weight: 700;
+    }
+
+    .old-price {
+      color: #999ba2;
+      font-size: 12px;
+      text-decoration: line-through;
+    }
+
+    .discount-label {
+      margin-bottom: 10px;
+      color: var(--pink);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .delivery {
+      margin-bottom: 13px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .add-button {
+      width: 100%;
+      min-height: 40px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--pink);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 800;
       transition: 0.25s ease;
     }
 
     .add-button:hover {
-      transform: rotate(90deg) scale(1.08);
+      background: var(--pink-dark);
     }
 
     .empty {
@@ -554,7 +607,7 @@
       padding: 27px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: var(--surface);
+      background: var(--dark-card);
     }
 
     .benefit-icon {
@@ -601,7 +654,7 @@
     .cart-modal {
       position: fixed;
       inset: 0;
-      z-index: 30;
+      z-index: 40;
       display: none;
       align-items: center;
       justify-content: center;
@@ -692,6 +745,12 @@
       }
     }
 
+    @media (max-width: 1100px) {
+      .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 900px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -701,8 +760,18 @@
         min-height: 340px;
       }
 
+      .benefits {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-visual {
+        height: 230px;
       }
     }
 
@@ -731,18 +800,21 @@
         margin-top: 18px;
       }
 
-      .products-grid,
-      .benefits {
-        grid-template-columns: 1fr;
+      .catalog-toolbar {
+        align-items: stretch;
+        flex-direction: column;
       }
 
       .search {
         width: 100%;
       }
 
-      .catalog-toolbar {
-        align-items: stretch;
-        flex-direction: column;
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-visual {
+        height: 300px;
       }
 
       .footer-inner {
@@ -775,7 +847,7 @@
     <div class="container nav">
       <a class="logo" href="#top">
         <span class="logo-mark">N</span>
-        <span>NEO<span>.</span></span>
+        <span class="logo-text">NEO<span>.</span></span>
       </a>
 
       <nav class="nav-links">
@@ -805,8 +877,8 @@
           </h1>
 
           <p class="hero-text">
-            NEOTECH — современный каталог устройств для работы, общения,
-            творчества и комфортной жизни.
+            NEOTECH — современный каталог устройств для работы,
+            общения, творчества и комфортной жизни.
           </p>
 
           <div class="hero-actions">
@@ -897,8 +969,8 @@
           </h2>
 
           <p class="section-description">
-            Мы собрали всё необходимое, чтобы покупка техники была простой
-            и комфортной.
+            Мы собрали всё необходимое, чтобы покупка техники была
+            простой и комфортной.
           </p>
         </div>
 
@@ -926,8 +998,8 @@
             <div class="benefit-icon">◈</div>
             <h3>Помощь в выборе</h3>
             <p>
-              Подскажем, какое устройство лучше подойдёт для ваших задач
-              и бюджета.
+              Подскажем, какое устройство лучше подойдёт для ваших
+              задач и бюджета.
             </p>
           </article>
 
@@ -937,7 +1009,10 @@
 
     <section id="contacts">
       <div class="container">
-        <div class="benefit" style="background: linear-gradient(135deg, rgba(216,255,82,.12), rgba(117,167,255,.1));">
+        <div
+          class="benefit"
+          style="background: linear-gradient(135deg, rgba(216,255,82,.12), rgba(117,167,255,.1));"
+        >
           <div class="eyebrow">Need help?</div>
 
           <h2 class="section-title">
@@ -1004,280 +1079,152 @@
   </div>
 
   <script>
-    const products = [
-      {
-        id: 1,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Aero Watch X1",
-        description: "AMOLED · GPS · 7 дней работы",
-        price: 24990,
-        symbol: "◉"
-      },
-      {
-        id: 2,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Pulse Pro",
-        description: "Пульс · Сон · Спортивные режимы",
-        price: 31990,
-        symbol: "◉"
-      },
-      {
-        id: 3,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Orbit S",
-        description: "Стальной корпус · NFC · IP68",
-        price: 38990,
-        symbol: "◉"
-      },
-      {
-        id: 4,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Neo Fit",
-        description: "Лёгкий корпус · 120 тренировок",
-        price: 17990,
-        symbol: "◉"
-      },
-      {
-        id: 5,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Titanium One",
-        description: "Титан · Sapphire Glass · LTE",
-        price: 54990,
-        symbol: "◉"
-      },
-      {
-        id: 6,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Motion Air",
-        description: "Ultra Slim · GPS · Музыка",
-        price: 27990,
-        symbol: "◉"
-      },
-      {
-        id: 7,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Classic AI",
-        description: "Голосовой помощник · AMOLED",
-        price: 29990,
-        symbol: "◉"
-      },
-      {
-        id: 8,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Active Mini",
-        description: "Компактный корпус · Женский дизайн",
-        price: 19990,
-        symbol: "◉"
-      },
-      {
-        id: 9,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Endurance GT",
-        description: "30 дней работы · Туристические карты",
-        price: 44990,
-        symbol: "◉"
-      },
-      {
-        id: 10,
-        category: "watch",
-        type: "Smart Watch",
-        name: "Vision Watch",
-        description: "Always-On · Камера · Управление жестами",
-        price: 49990,
-        symbol: "◉"
-      },
+    const imageSets = {
+      watch: [
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1434056886845-dac89efe9b0c?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1617043786394-f977fa12eddf?auto=format&fit=crop&w=900&q=85"
+      ],
 
-      {
-        id: 11,
-        category: "laptop",
-        type: "Laptop",
-        name: "AeroBook 14",
-        description: "M3 · 16/512 GB · Retina Display",
-        price: 119990,
-        symbol: "▱"
-      },
-      {
-        id: 12,
-        category: "laptop",
-        type: "Laptop",
-        name: "AeroBook Pro 16",
-        description: "M3 Pro · 18/512 GB · ProMotion",
-        price: 189990,
-        symbol: "▱"
-      },
-      {
-        id: 13,
-        category: "laptop",
-        type: "Laptop",
-        name: "Creator Studio",
-        description: "Core Ultra 7 · RTX 4060 · 32 GB",
-        price: 159990,
-        symbol: "▱"
-      },
-      {
-        id: 14,
-        category: "laptop",
-        type: "Laptop",
-        name: "WorkMate 15",
-        description: "Ryzen 7 · 16/1000 GB · 15.6 inch",
-        price: 89990,
-        symbol: "▱"
-      },
-      {
-        id: 15,
-        category: "laptop",
-        type: "Laptop",
-        name: "LightBook Air",
-        description: "Intel Evo · 16/512 GB · 1.2 кг",
-        price: 104990,
-        symbol: "▱"
-      },
-      {
-        id: 16,
-        category: "laptop",
-        type: "Laptop",
-        name: "GameCore 17",
-        description: "Core i9 · RTX 4070 · 240 Hz",
-        price: 219990,
-        symbol: "▱"
-      },
-      {
-        id: 17,
-        category: "laptop",
-        type: "Laptop",
-        name: "PixelBook X",
-        description: "OLED · 32/1000 GB · Thunderbolt",
-        price: 139990,
-        symbol: "▱"
-      },
-      {
-        id: 18,
-        category: "laptop",
-        type: "Laptop",
-        name: "FlexBook Duo",
-        description: "2-in-1 · Touch Screen · Stylus",
-        price: 124990,
-        symbol: "▱"
-      },
-      {
-        id: 19,
-        category: "laptop",
-        type: "Laptop",
-        name: "ProLine 13",
-        description: "Core Ultra 5 · 16/512 GB · 18 часов",
-        price: 94990,
-        symbol: "▱"
-      },
-      {
-        id: 20,
-        category: "laptop",
-        type: "Laptop",
-        name: "Titan Workstation",
-        description: "Ryzen 9 · RTX 4080 · 64 GB",
-        price: 279990,
-        symbol: "▱"
-      },
+      laptop: [
+        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=900&q=85"
+      ],
 
-      {
-        id: 21,
-        category: "phone",
-        type: "Smartphone",
-        name: "Nova Phone 15",
-        description: "6.1 inch · 256 GB · 48 MP",
-        price: 79990,
-        symbol: "▯"
-      },
-      {
-        id: 22,
-        category: "phone",
-        type: "Smartphone",
-        name: "Nova Phone 15 Pro",
-        description: "Titanium · 512 GB · Pro Camera",
-        price: 119990,
-        symbol: "▯"
-      },
-      {
-        id: 23,
-        category: "phone",
-        type: "Smartphone",
-        name: "Pixel Vision 9",
-        description: "AI Camera · OLED · 256 GB",
-        price: 89990,
-        symbol: "▯"
-      },
-      {
-        id: 24,
-        category: "phone",
-        type: "Smartphone",
-        name: "Galaxy Edge 25",
-        description: "120 Hz · 512 GB · 200 MP",
-        price: 109990,
-        symbol: "▯"
-      },
-      {
-        id: 25,
-        category: "phone",
-        type: "Smartphone",
-        name: "One Pro Max",
-        description: "Snapdragon Elite · 1 TB · 5G",
-        price: 99990,
-        symbol: "▯"
-      },
-      {
-        id: 26,
-        category: "phone",
-        type: "Smartphone",
-        name: "Nothing Light",
-        description: "Glyph Interface · OLED · 256 GB",
-        price: 54990,
-        symbol: "▯"
-      },
-      {
-        id: 27,
-        category: "phone",
-        type: "Smartphone",
-        name: "Zen Phone Ultra",
-        description: "Gaming Mode · 165 Hz · 6000 mAh",
-        price: 74990,
-        symbol: "▯"
-      },
-      {
-        id: 28,
-        category: "phone",
-        type: "Smartphone",
-        name: "Fold Vision",
-        description: "Foldable OLED · 512 GB · 5G",
-        price: 169990,
-        symbol: "▯"
-      },
-      {
-        id: 29,
-        category: "phone",
-        type: "Smartphone",
-        name: "Aero Mini",
-        description: "Компактный корпус · 128 GB · NFC",
-        price: 44990,
-        symbol: "▯"
-      },
-      {
-        id: 30,
-        category: "phone",
-        type: "Smartphone",
-        name: "Titan Phone Ultra",
-        description: "Керамика · 1 TB · Satellite SOS",
-        price: 139990,
-        symbol: "▯"
-      }
-    ];
+      phone: [
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=85",
+        "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=900&q=85"
+      ]
+    };
+
+    const productNames = {
+      watch: [
+        "Aero Watch X1",
+        "Pulse Pro",
+        "Orbit S",
+        "Neo Fit",
+        "Titanium One",
+        "Motion Air",
+        "Classic AI",
+        "Active Mini",
+        "Endurance GT",
+        "Vision Watch"
+      ],
+
+      laptop: [
+        "AeroBook 14",
+        "AeroBook Pro 16",
+        "Creator Studio",
+        "WorkMate 15",
+        "LightBook Air",
+        "GameCore 17",
+        "PixelBook X",
+        "FlexBook Duo",
+        "ProLine 13",
+        "Titan Workstation"
+      ],
+
+      phone: [
+        "Nova Phone 15",
+        "Nova Phone 15 Pro",
+        "Pixel Vision 9",
+        "Galaxy Edge 25",
+        "One Pro Max",
+        "Nothing Light",
+        "Zen Phone Ultra",
+        "Fold Vision",
+        "Aero Mini",
+        "Titan Phone Ultra"
+      ]
+    };
+
+    const productDescriptions = {
+      watch: [
+        "AMOLED · GPS · 7 дней работы",
+        "Пульс · Сон · Спортивные режимы",
+        "Стальной корпус · NFC · IP68",
+        "Лёгкий корпус · 120 тренировок",
+        "Титан · Sapphire Glass · LTE",
+        "Ultra Slim · GPS · Музыка",
+        "Голосовой помощник · AMOLED",
+        "Компактный корпус · Женский дизайн",
+        "30 дней работы · Туристические карты",
+        "Always-On · Камера · Управление жестами"
+      ],
+
+      laptop: [
+        "M3 · 16/512 GB · Retina Display",
+        "M3 Pro · 18/512 GB · ProMotion",
+        "Core Ultra 7 · RTX 4060 · 32 GB",
+        "Ryzen 7 · 16/1000 GB · 15.6 inch",
+        "Intel Evo · 16/512 GB · 1.2 кг",
+        "Core i9 · RTX 4070 · 240 Hz",
+        "OLED · 32/1000 GB · Thunderbolt",
+        "2-in-1 · Touch Screen · Stylus",
+        "Core Ultra 5 · 16/512 GB · 18 часов",
+        "Ryzen 9 · RTX 4080 · 64 GB"
+      ],
+
+      phone: [
+        "6.1 inch · 256 GB · 48 MP",
+        "Titanium · 512 GB · Pro Camera",
+        "AI Camera · OLED · 256 GB",
+        "120 Hz · 512 GB · 200 MP",
+        "Snapdragon Elite · 1 TB · 5G",
+        "Glyph Interface · OLED · 256 GB",
+        "Gaming Mode · 165 Hz · 6000 mAh",
+        "Foldable OLED · 512 GB · 5G",
+        "Компактный корпус · 128 GB · NFC",
+        "Керамика · 1 TB · Satellite SOS"
+      ]
+    };
+
+    const prices = {
+      watch: [
+        24990, 31990, 38990, 17990, 54990,
+        27990, 29990, 19990, 44990, 49990
+      ],
+
+      laptop: [
+        119990, 189990, 159990, 89990, 104990,
+        219990, 139990, 124990, 94990, 279990
+      ],
+
+      phone: [
+        79990, 119990, 89990, 109990, 99990,
+        54990, 74990, 169990, 44990, 139990
+      ]
+    };
+
+    const categoryLabels = {
+      watch: "Smart Watch",
+      laptop: "Laptop",
+      phone: "Smartphone"
+    };
+
+    const products = [];
+
+    Object.keys(productNames).forEach((category) => {
+      productNames[category].forEach((name, index) => {
+        products.push({
+          id: products.length + 1,
+          category,
+          type: categoryLabels[category],
+          name,
+          description: productDescriptions[category][index],
+          price: prices[category][index],
+          image: imageSets[category][index % imageSets[category].length]
+        });
+      });
+    });
 
     let selectedCategory = "all";
     let searchValue = "";
@@ -1291,9 +1238,19 @@
     const cartItems = document.getElementById("cartItems");
     const cartTotal = document.getElementById("cartTotal");
 
-    const formatPrice = (price) => {
+    function formatPrice(price) {
       return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
-    };
+    }
+
+    function getOldPrice(price) {
+      return Math.round(price * 1.18);
+    }
+
+    function getDiscount(price) {
+      return Math.round(
+        ((getOldPrice(price) - price) / getOldPrice(price)) * 100
+      );
+    }
 
     function renderProducts() {
       const filteredProducts = products.filter((product) => {
@@ -1314,32 +1271,77 @@
         filteredProducts.length === 0 ? "block" : "none";
 
       filteredProducts.forEach((product) => {
+        const oldPrice = getOldPrice(product.price);
+        const discount = getDiscount(product.price);
+
         const card = document.createElement("article");
 
-        card.className = `product-card ${product.category}`;
+        card.className = "product-card";
 
         card.innerHTML = `
-          <div>
-            <div class="product-visual">
-              <div class="product-symbol">${product.symbol}</div>
+          <div class="product-visual">
+            <img
+              class="product-image"
+              src="${product.image}"
+              alt="${product.name}"
+              loading="lazy"
+            />
+
+            <div class="product-badge">
+              -${discount}%
             </div>
 
-            <div class="product-type">${product.type}</div>
-
-            <h3 class="product-name">${product.name}</h3>
-
-            <p class="product-meta">${product.description}</p>
+            <button
+              class="favorite-button"
+              aria-label="Добавить в избранное"
+            >
+              ♡
+            </button>
           </div>
 
-          <div class="product-bottom">
-            <div class="price">${formatPrice(product.price)}</div>
+          <div class="product-info">
+            <div class="product-type">
+              ${product.type}
+            </div>
+
+            <h3 class="product-name">
+              ${product.name}
+            </h3>
+
+            <p class="product-meta">
+              ${product.description}
+            </p>
+
+            <div class="product-rating">
+              ★★★★★
+              <span>
+                4.8 · ${Math.floor(product.id * 37 + 80)} отзывов
+              </span>
+            </div>
+
+            <div class="product-price-row">
+              <strong class="product-price">
+                ${formatPrice(product.price)}
+              </strong>
+
+              <span class="old-price">
+                ${formatPrice(oldPrice)}
+              </span>
+            </div>
+
+            <div class="discount-label">
+              Скидка ${discount}%
+            </div>
+
+            <div class="delivery">
+              Доставка завтра
+            </div>
 
             <button
               class="add-button"
               data-id="${product.id}"
-              aria-label="Добавить в корзину"
             >
-              +
+              В корзину
             </button>
           </div>
         `;
@@ -1352,6 +1354,15 @@
           addToCart(Number(button.dataset.id));
         });
       });
+
+      document.querySelectorAll(".favorite-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          button.classList.toggle("active");
+
+          button.textContent =
+            button.classList.contains("active") ? "♥" : "♡";
+        });
+      });
     }
 
     function addToCart(productId) {
@@ -1361,7 +1372,6 @@
 
       cart.push(product);
       updateCart();
-
       cartModal.classList.add("open");
     }
 
@@ -1389,7 +1399,10 @@
                   <small>${formatPrice(product.price)}</small>
                 </div>
 
-                <button class="remove-item" data-index="${index}">
+                <button
+                  class="remove-item"
+                  data-index="${index}"
+                >
                   Удалить
                 </button>
               </div>
@@ -1404,7 +1417,10 @@
         });
       }
 
-      const total = cart.reduce((sum, product) => sum + product.price, 0);
+      const total = cart.reduce(
+        (sum, product) => sum + product.price,
+        0
+      );
 
       cartTotal.textContent = formatPrice(total);
     }
@@ -1413,10 +1429,11 @@
       button.addEventListener("click", () => {
         document
           .querySelectorAll(".filter")
-          .forEach((item) => item.classList.remove("active"));
+          .forEach((item) => {
+            item.classList.remove("active");
+          });
 
         button.classList.add("active");
-
         selectedCategory = button.dataset.category;
 
         renderProducts();
